@@ -18,7 +18,7 @@ class LeadpagesLoginTestSuccess extends TestCase
         $this->username = $testData['username'];
         $this->password = $testData['password'];
 
-        $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class);
+        $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
         //set to true to simulate getting back a true response from api call
 
@@ -91,7 +91,7 @@ class LeadpagesLoginTestFail extends TestCase
         $this->username = $testData['badusername'];
         $this->password = $testData['badusername'];
 
-        $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class);
+        $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
         //set to true to simulate getting back a true response from api call
         $this->stub->expects($this->any())
@@ -119,7 +119,7 @@ class LeadpagesLoginTestFail extends TestCase
      */
     public function test_get_user()
     {
-        //call to actual service, choose not to mock this out as I want to
+        //call to actual service, chose not to mock this out as I want to
         //make sure the service itself is returning the correct data
 
         //get a response from Leadpages
@@ -133,18 +133,19 @@ class LeadpagesLoginTestFail extends TestCase
     }
 
     /**
-     * @group login-success
+     * @group login-fail
      */
 
     public function test_current_user_is_logged_in()
     {
         //set response
-        $this->stub->setLeadpagesResponse([
-          "code"     => "401",
-          "response" => "Client error response [url] https://api.leadpages.io/auth/v1/sessions/ [status code] 401 [reason phrase] Unauthorized",
-          "error"    => true
+        $this->stub->setLeadpagesResponse(json_encode([
+            "code"     => "401",
+            "response" => "Client error response [url] https://api.leadpages.io/auth/v1/sessions/ [status code] 401 [reason phrase] Unauthorized",
+            "error"    => true
 
-        ]);
+          ])
+        );
         //check if response satisfies being logged in
         $isLoggedIn = $this->stub->checkIfUserIsLoggedIn();
         $this->assertFalse($isLoggedIn);
