@@ -1,0 +1,22 @@
+{
+    "name": "brandonbraner/leadpages-auth",
+    "description": "Authentication package for interfacing with Leadpages API's",
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~5 < 6"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Leadpages\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Brandon Braner",
+            "email": "brandon.braner@ave81.com"
+        }
+    ]
+}
