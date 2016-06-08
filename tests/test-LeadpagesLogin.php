@@ -33,11 +33,7 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
         $this->stub->expects($this->any())
                    ->method('deleteToken')
                    ->will($this->returnValue(true));
-
-        $this->stub->expects($this->any())
-                   ->method('deleteToken')
-                   ->will($this->returnValue(true));
-
+        
         $this->stub->expects($this->any())
                    ->method('checkIfUserIsLoggedIn')
                    ->will($this->returnValue(true));
