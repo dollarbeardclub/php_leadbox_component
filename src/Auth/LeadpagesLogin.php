@@ -52,7 +52,7 @@ abstract class LeadpagesLogin extends LeadpagesToken
             $response       = [
               'code'     => $e->getCode(),
               'response' => $e->getMessage(),
-              'error'    => 'true'
+              'error'    => (bool)true
             ];
             $this->response = json_encode($response);
             return $this;
@@ -66,9 +66,6 @@ abstract class LeadpagesLogin extends LeadpagesToken
      */
     public function checkIfUserIsLoggedIn()
     {
-        print_r($this->response);
-        //call getCurrentUserToken to get response
-
         //check if $this->response is an array
         if(is_array(json_decode($this->response, true))){
             return false;
@@ -102,9 +99,9 @@ abstract class LeadpagesLogin extends LeadpagesToken
     }
 
     /**
-     * parse response for call to Leadpages Login if response does
-     * not contain an error it is good else we return an
-     * response with HttpResonseCode and Message
+     * Parse response for call to Leadpages Login. If response does
+     * not contain a error we will return a response with
+     * HttpResponseCode and Message
      *
      * @param bool $deleteTokenOnFail
      *

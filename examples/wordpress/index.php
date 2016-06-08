@@ -13,20 +13,19 @@ class WordPressLeadpagesLogin extends LeadpagesLogin
 {
 
     /**
-     * method to implement on extending class to store token in database
+     * store token in Wordpress Database
      *
      * @return mixed
      */
     public function storeToken()
     {
-        echo $this->token;
-        //update_option($this->tokenLabel, $this->token);
+        update_option($this->tokenLabel, $this->token);
     }
 
+
     /**
-     * method to implement on extending class to get token from datastore
-     * should return token not set property of $this->token
-     * @return mixed
+     * get token form WordPress Database and set the $this->token
+     * $this->token needs to be set on this method
      */
     public function getToken()
     {
@@ -34,9 +33,10 @@ class WordPressLeadpagesLogin extends LeadpagesLogin
     }
 
     /**
-     * method to implement on extending class to remove token from database
+     * Delete token from WordPress Database
      * @return mixed
      */
+     
     public function deleteToken()
     {
         delete_options($this->tokenLabel);
@@ -58,7 +58,7 @@ if (isset($leadpages->token)) {
 
 //this will set the response for checkIfUserIsloggedIn to verify against.
 //could also chain them as they are fluent $leadpagesLogin->getCurrentUserToken()->checkIfUserIsLoggedIn()
-//isLoggedIn should be true if they current token resulted in a proper response from auth api
+//isLoggedIn should be true if the current token call resulted in a proper response from auth api
 $leadpagesLogin->getCurrentUserToken();
 $isLoggedIn = $leadpagesLogin->checkIfUserIsLoggedIn();
 
