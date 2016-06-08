@@ -12,7 +12,7 @@ php:
   # aliased to a recent 5.6.x version
   - 5.6
   # aliased to a recent 7.x version
-  - 7.0
+  #- 7.0
 
 
 # optionally set up exclutions and allowed failures in the matrix
@@ -32,4 +32,3 @@ script: phpunit --configuration phpunit.xml --coverage-text
 
 # configure notifications (email, IRC, campfire etc)
 #notifications:
-  
