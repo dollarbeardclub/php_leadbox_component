@@ -1,11 +1,11 @@
 <?php
 
-use Leadpages\Auth\LeadpagesLogin;
-use phpunit\framework\TestCase;
-
 require dirname(__FILE__) . '/data/testData.php';
 
-class LeadpagesLoginTestSuccess extends TestCase
+use Leadpages\Auth\LeadpagesLogin;
+
+
+class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 {
     public $stub;
     public $username;
@@ -78,7 +78,7 @@ class LeadpagesLoginTestSuccess extends TestCase
 
 }
 
-class LeadpagesLoginTestFail extends TestCase
+class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
 {
     public $stub;
     public $username;
