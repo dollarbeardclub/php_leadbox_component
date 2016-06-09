@@ -16,8 +16,8 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
 //        $this->username = $testData['username'];
 //        $this->password = $testData['password'];
-        $this->username = getenv('lpusername');
-        $this->password = getenv('lppassword');
+        $this->username = getenv('username');
+        $this->password = getenv('password');
         echo $this->password;
         echo $this->username;
 
