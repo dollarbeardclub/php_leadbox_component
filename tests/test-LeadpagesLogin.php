@@ -15,8 +15,10 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
     {
         global $testData;
 
-        $this->username = $testData['username'];
-        $this->password = $testData['password'];
+//        $this->username = $testData['username'];
+//        $this->password = $testData['password'];
+        $this->username = $_ENV['username'];
+        $this->password = $_ENV['password'];
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
