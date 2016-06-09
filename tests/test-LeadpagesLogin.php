@@ -1,6 +1,6 @@
 <?php
 
-require dirname(__FILE__) . '/data/testData.php';
+//require dirname(__FILE__) . '/data/testData.php';
 
 use Leadpages\Auth\LeadpagesLogin;
 
@@ -13,7 +13,6 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        global $testData;
 
 //        $this->username = $testData['username'];
 //        $this->password = $testData['password'];
@@ -88,10 +87,9 @@ class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        global $testData;
 
-        $this->username = $testData['badusername'];
-        $this->password = $testData['badusername'];
+        $this->username = 'test@unitest.net';
+        $this->password = 'example';
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
