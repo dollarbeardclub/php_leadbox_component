@@ -18,8 +18,8 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 //        $this->password = $testData['password'];
         $this->username = getenv('username');
         $this->password = getenv('password');
-        echo $this->password;
-        echo $this->username;
+        echo "USERNAME: ".$this->username . '<br />';
+        echo "PASSWORD: ".$this->password . '<br />';
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
@@ -31,10 +31,6 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
         $this->stub->expects($this->any())
                    ->method('getToken')
-                   ->will($this->returnValue(true));
-
-        $this->stub->expects($this->any())
-                   ->method('deleteToken')
                    ->will($this->returnValue(true));
 
         $this->stub->expects($this->any())
