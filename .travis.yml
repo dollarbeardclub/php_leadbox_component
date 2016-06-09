@@ -1,33 +1,15 @@
-# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
 language: php
-
-# list any PHP version you want to test against
 php:
-  # using major version aliases
-
-  # aliased to a recent 5.4.x version
-  # - 5.4
-  # aliased to a recent 5.5.x version
-  - 5.5
-  # aliased to a recent 5.6.x version
-  - 5.6
-  # aliased to a recent 7.x version
-  - 7.0
-
-
-# optionally set up exclutions and allowed failures in the matrix
+- 5.5
+- 5.6
+- 7.0
 matrix:
-  #allow_failures:
-    #- php: 7.0
   fast_finish: true
-
-# execute any number of scripts before the test run, custom env's are available as variables
 before_script:
-  - composer self-update
-  - composer install
-
-# omitting "script:" will default to phpunit
+- composer self-update
+- composer install
 script: phpunit --configuration phpunit.xml --coverage-text
-
-# configure notifications (email, IRC, campfire etc)
-#notifications:
+env:
+  matrix:
+  - secure: I1bVGpvSzO7kH2vK/D6YWgCb9LD/U3B5OpfLswH5rq3Wo3RxAvgXBU2YfKLkFYJvhjzB0rP/7KddE32vN0X0l+uR29LdmMBJB8s3AblZbo+Mj8cfM1Vw5w5rhHROb5vx310USU1ut7Vr6+ENP44qXhv9bLys4b+EruK55ziUIeaaC5N30vp96LXrk8YBle59b7E2NsxO2Mz4a3CzIVBh1VcdTWX6HjLV9N4V3Iwuzq4pAWmMN+7smAXY6ONlC8M+k5Ut6dztNCy9Wgcdk6C0iNxErrWde3Ijn8q98bOPa3btsEAxUel29IlZkwTMTOVUAuZBubAmOqvD+8p9HKZ0oKVok7L2Vf5XWlynwRRoD/uj1Zs+QMEcSN1tuCB5HR1SgM1oktsn89UosjGPWZ8/tJGwHlcr8ZOPEHk8zJ3Y8ePcOqxKlz/5L9eK4XVuCSPM3m72tDUxnpIGDCjf+wKEAqQfGN3MilaX3ayr5QqfGx2aF9i+cNc/0OlLXY5cq6MoOYb2lJesZ6LblEgzaNnwUATKAMSDjGp7K4NpbKJO6q7THY0v2I8t+b/fAPgPBbpqJzqqsPv9qLfIQmzxdw2069k7n5PXoOo2A5gqEwHRgCeJp3Ch8rH8H1mKVFUgUTN6s5kkcmRnBD3Ap96/naukN1tPiyiawudbdS5//i+ai5Q=
+  - secure: dAoIzZ8uJN5yf7XnYJ7OPa1jMLy1amauPdH1X6Jt6MYOArDnn9k3Jtc3+iYg1cJYYniVv/mAOE5cIyyTmN0jUYyJ91mcL7dsM4mXRjp/AzsbBYUIkt0LXlmL92oGYITEIXS0JlK36JnyjeMdodapBGX7rw/jN0iaghRnkF19AZPumrw2bfBdDIXWbpBrV7FkDGPx9ke9OPk8ehxFDaSujzbYBNF3B94aY3Vju1NPhbvo4zCOBN28rqqXO+MELZE0pFha0tfF2UnagzVMvvw+RkxrFboXJ1+rlOKt5+6p+6jzBtUJNwaQNeQ/VAssuIEJrOaISAxaqqd+zW5lr/ycWTzcd1H85mHKsfptb7jwLWwgBwB7UJP6JRpQLcxKsfIADERWstLxPTvoAjOkBVgKdjGLgQ9rlLnz3TdwbL2dbhEojmRHDlQ1/fK0QAasytIK8d7KDotBXCDeG1N5FRrQETFwKdqrgB4AzD+1JThVNUuZ0EpeiAwL/os7Wptaoyww5zGALuQxiKSxYhTFXcIfrsFF0QvxXW4XexTlmxvAAl3umo9znGTfZvWywT2eWWqCrOGYV6gYcLL471IiSBUWY3JYxQTGMkyR1vIcTW0EFtwXaHxBvSL8k/8A91ZSh/7cLF1f+XLBMZD8U9nMjw9QPgzDvhqcfpvlH7XDPiHc3BE=
