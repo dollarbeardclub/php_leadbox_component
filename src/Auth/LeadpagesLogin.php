@@ -68,6 +68,10 @@ abstract class LeadpagesLogin implements LeadpagesToken
         }
     }
 
+    /**
+     * Check to see if you get a proper response back if you use the token stored in your DB
+     * @return bool
+     */
     public function checkCurrentUserToken()
     {
         try {
