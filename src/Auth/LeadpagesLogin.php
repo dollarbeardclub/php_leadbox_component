@@ -6,11 +6,20 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Leadpages\Auth\Contracts\LeadpagesToken;
 
-abstract class LeadpagesLogin extends LeadpagesToken
+abstract class LeadpagesLogin implements LeadpagesToken
 {
 
     protected $client;
-    protected $response;
+    public $response;
+
+    /**
+     * Token label that should be used to reference the token in the database for consistency across platforms
+     * and upgrades easier
+     * @var string
+     */
+    public $tokenLabel = 'leadpages_security_token';
+
+    public $token;
 
     public function __construct(Client $client)
     {
@@ -59,42 +68,24 @@ abstract class LeadpagesLogin extends LeadpagesToken
         }
     }
 
-    /**
-     * Check the users security token to ensure it is still valid, if it is we return the response object
-     * else we return an array with HttpResponseCode and error message
-     * @return $this
-     */
-    public function checkIfUserIsLoggedIn()
+    public function checkCurrentUserToken()
     {
-        //check if $this->response is an array
-        if(is_array(json_decode($this->response, true))){
-            return false;
-        }else{
-            return true;
-        }
-
-    }
-
-    public function getCurrentUserToken()
-    {
-        $this->token = $this->getToken();
-
         try {
             $response       = $this->client->get(
               $this->loginCheckUrl,
               [
                 'headers' => ['LP-Security-Token' => $this->token]
               ]);
-            $this->response = $response->getBody();
-            return $this;
+            //return true as token is good
+            $responseArray = json_decode($response->getBody(), true);
+            if(isset($responseArray['securityToken'])) {
+                return true;
+            }else{
+                return false;
+            }
         } catch (ClientException $e) {
-            $response       = [
-              'code'     => $e->getCode(),
-              'response' => $e->getMessage(),
-              'error'    => 'true'
-            ];
-            $this->response = json_encode($response);
-            return $this;
+            //return false as token is bad
+            return false;
         }
     }
 
@@ -120,6 +111,7 @@ abstract class LeadpagesLogin extends LeadpagesToken
             return $this->response; //return json encoded response for client to handle
         }
         $this->token = $responseArray['securityToken'];
+        return 'success';
     }
 
     public function getLeadpagesResponse()
