@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/blbraner1234/lpauth.svg?branch=master)](https://travis-ci.org/blbraner1234/lpauth)
 ## This is beta. Please do not use as it will be removed
 
 ## Synopsis
