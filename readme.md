@@ -1,3 +1,5 @@
+## This is beta. Please do not use as it will be removed
+
 ## Synopsis
 
 Leadpages Auth is meant to make it simple to get your integration into Leadpages off the ground quickly.
