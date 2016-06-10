@@ -1,6 +1,6 @@
 {
-    "name": "brandonbraner/leadpages-auth",
-    "description": "Authentication package for interfacing with Leadpages API's",
+    "name": "brandonbraner/auth-test",
+    "description": "Authentication package for interfacing with LP API's",
     "require": {
         "php": ">=5.4.0",
         "guzzlehttp/guzzle": "~5 < 6"
