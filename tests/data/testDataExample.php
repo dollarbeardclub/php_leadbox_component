@@ -1,8 +1,5 @@
 <?php
 
-return $testData = [
-  'username'    => "", //leadpages username
-  'password'    => "", //leadpages password
-  'badusername' => "unittester@example.com",
-  'password'    => "unittest",
-];
+//replace example data with your production leadpages info
+putenv("username=example@example.com");
+putenv("password=examplepassword");
