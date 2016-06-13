@@ -1,7 +1,5 @@
 <?php
 
-require dirname(__FILE__) . '/data/testData.php';
-
 use Leadpages\Auth\LeadpagesLogin;
 
 
@@ -10,13 +8,14 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
     public $stub;
     public $username;
     public $password;
+    public $testToken;
 
     public function setUp()
     {
-        global $testData;
 
-        $this->username = $testData['username'];
-        $this->password = $testData['password'];
+        $this->username = getenv('username');
+        $this->password = getenv('password');
+        $this->testToken = getenv('testToken');
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
@@ -32,10 +31,6 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
         $this->stub->expects($this->any())
                    ->method('deleteToken')
-                   ->will($this->returnValue(true));
-        
-        $this->stub->expects($this->any())
-                   ->method('checkIfUserIsLoggedIn')
                    ->will($this->returnValue(true));
 
     }
@@ -63,13 +58,11 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
      * @group login-success
      */
 
-    public function test_current_user_is_logged_in()
+    public function test_current_user_token_is_good()
     {
-        //set response
-        $this->stub->setLeadpagesResponse('leadpagesToken');
-        //check if response satisfies being logged in
-        $isLoggedIn = $this->stub->checkIfUserIsLoggedIn();
-        $this->assertTrue($isLoggedIn);
+        $this->stub->token = $this->testToken;
+        $isTokenGood = $this->stub->checkCurrentUserToken();
+        $this->assertTrue($isTokenGood);
     }
 
 }
@@ -82,17 +75,11 @@ class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        global $testData;
 
-        $this->username = $testData['badusername'];
-        $this->password = $testData['badusername'];
+        $this->username = 'test@unitest.net';
+        $this->password = 'example';
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
-
-        //set to true to simulate getting back a true response from api call
-        $this->stub->expects($this->any())
-                   ->method('getCurrentUserToken')
-                   ->will($this->returnValue(true));
 
         $this->stub->expects($this->any())
                    ->method('storeToken')
@@ -134,17 +121,9 @@ class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
 
     public function test_current_user_is_logged_in()
     {
-        //set response
-        $this->stub->setLeadpagesResponse(json_encode([
-            "code"     => "401",
-            "response" => "Client error response [url] https://api.leadpages.io/auth/v1/sessions/ [status code] 401 [reason phrase] Unauthorized",
-            "error"    => true
-
-          ])
-        );
-        //check if response satisfies being logged in
-        $isLoggedIn = $this->stub->checkIfUserIsLoggedIn();
-        $this->assertFalse($isLoggedIn);
+        $this->stub->token = 'badtoken';
+        $isTokenGood = $this->stub->checkCurrentUserToken();
+        $this->assertFalse($isTokenGood);
     }
 
 

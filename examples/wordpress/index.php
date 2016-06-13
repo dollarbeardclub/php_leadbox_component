@@ -41,19 +41,25 @@ class WordPressLeadpagesLogin extends LeadpagesLogin
     {
         delete_options($this->tokenLabel);
     }
+
+    /**
+     * method to check if token is empty
+     *
+     * @return mixed
+     */
+    public function checkIfTokenIsEmpty()
+    {
+        // TODO: Implement checkIfTokenIsEmpty() method.
+    }
 }
 
 //instantiate Class
 $leadpagesLogin = new WordPressLeadpagesLogin(new Client());
 //call get user pipe into parseResponse
 $leadpagesLogin->getUser('example@example.com', 'password')->parseResponse();
-if (isset($leadpages->token)) {
-    //STORE TOKEN
-    $leadpagesLogin->storeToken();
-}else{
-    //RETURN RESPONSE FOR DISPLAY
-    return $leadpagesLogin->getLeadpagesResponse();
-}
+
+//will return true of false if the users stored token retrieves a proper response
+$isLoggedIn = $leadpagesLogin->checkCurrentUserToken();
 
 
 //this will set the response for checkIfUserIsloggedIn to verify against.
