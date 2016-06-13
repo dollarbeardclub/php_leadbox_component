@@ -9,36 +9,33 @@ namespace Leadpages\Auth\Contracts;
  * @package Leadpages\Auth\Interfaces
  */
 
-abstract class LeadpagesToken
+interface LeadpagesToken
 {
 
     /**
-     * Token label that should be used to reference the token in the database for consistency across platforms
-     * and upgrades easier
-     * @var string
-     */
-    protected $tokenLabel = 'leadpages_security_token';
-
-    public $token;
-
-
-    /**
-     * method to implement on extending class to store token in database
+     * method to implement to store token in database
      *
      * @return mixed
      */
-    public abstract function storeToken();
+    public function storeToken();
 
     /**
-     * method to implement on extending class to get token from datastore
+     * method to implement to get token from datastore
      * should return token not set property of $this->token
      * @return mixed
      */
-    public abstract function getToken();
+    public function getToken();
 
     /**
-     * method to implement on extending class to remove token from database
+     * method to implement to remove token from database
      * @return mixed
      */
-    public abstract function deleteToken();
+    public function deleteToken();
+
+    /**
+     * method to check if token is empty
+     *
+     * @return mixed
+     */
+    public function checkIfTokenIsEmpty();
 }
