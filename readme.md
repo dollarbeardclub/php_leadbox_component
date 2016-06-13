@@ -84,7 +84,7 @@ curl -sS https://getcomposer.org/installer | php
 Run composer to require the package
 
 ```
-php composer.phar require leadpages\leadpages-auth
+php composer.phar require leadpages/leadpages-auth
 ```
 
 Next insure that you are included the composer autoloader into your project. Package uses PSR-4 Autoloading
