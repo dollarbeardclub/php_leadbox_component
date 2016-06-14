@@ -46,13 +46,13 @@ abstract class LeadpagesLogin implements LeadpagesToken
     public function getUser($username, $password)
     {
         $authHash = $this->hashUserNameAndPassword($username, $password);
-
+        $body = json_encode(['clientType' => 'wp-plugin']);
         try {
             $response       = $this->client->post(
               $this->loginurl, //url
               [
                 'headers' => ['Authorization' => 'Basic ' . $authHash],
-                'body'    => ['clientType' => 'wp-plugin'] //wp-plugin value makes session not expire
+                'body'    => $body //wp-plugin value makes session not expire
               ]);
             $this->response = $response->getBody();
             return $this;
