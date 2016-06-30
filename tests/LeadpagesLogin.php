@@ -13,8 +13,8 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
     public function setUp()
     {
 
-        $this->username = getenv('username');
-        $this->password = getenv('password');
+        $this->username  = getenv('username');
+        $this->password  = getenv('password');
         $this->testToken = getenv('testToken');
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
@@ -47,11 +47,13 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
         //make sure the service itself is returning the correct data
 
         //get a response from Leadpages
+
         $this->stub->getUser($this->username, $this->password)->parseResponse();
 
         //if all succeeded the token should not be empty and should be a string
         $this->assertNotEmpty($this->stub->token);
         $this->assertInternalType('string', $this->stub->token);
+
     }
 
     /**
@@ -63,6 +65,12 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
         $this->stub->token = $this->testToken;
         $isTokenGood = $this->stub->checkCurrentUserToken();
         $this->assertTrue($isTokenGood);
+    }
+
+    public function test_set_leadpages_response()
+    {
+        $this->stub->setLeadpagesResponse('this is a test response');
+        $this->assertEquals('this is a test response', $this->stub->response);
     }
 
 }
@@ -100,13 +108,13 @@ class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
      *
      * @group login-fail
      */
-    public function test_get_user()
+    public function test_get_user_fail()
     {
         //call to actual service, chose not to mock this out as I want to
         //make sure the service itself is returning the correct data
 
         //get a response from Leadpages
-        $this->stub->getUser($this->username, $this->password)->parseResponse();
+        $this->stub->getUser($this->username, $this->password)->parseResponse(true);
 
 
         $responseArray = json_decode($this->stub->getLeadpagesResponse(), true);
@@ -119,7 +127,7 @@ class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
      * @group login-fail
      */
 
-    public function test_current_user_is_logged_in()
+    public function test_current_user_is_logged_in_fail()
     {
         $this->stub->token = 'badtoken';
         $isTokenGood = $this->stub->checkCurrentUserToken();

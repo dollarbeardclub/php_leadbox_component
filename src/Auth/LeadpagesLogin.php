@@ -83,14 +83,13 @@ abstract class LeadpagesLogin implements LeadpagesToken
             //return true as token is good
             $responseArray = json_decode($response->getBody(), true);
             if(isset($responseArray['securityToken'])) {
-                return true;
-            }else{
-                return false;
+                $response = true;
             }
         } catch (ClientException $e) {
             //return false as token is bad
-            return false;
+            $response = false;
         }
+        return $response;
     }
 
     /**

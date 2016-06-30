@@ -8,18 +8,16 @@
 >
     <testsuites>
         <testsuite>
-            <directory prefix="test-" suffix=".php">./tests/</directory>
+            <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
-        <filter>
-            <blacklist>
-                <directory>vendor</directory>
-                <directory>tests</directory>
-            </blacklist>
-            <whitelist>
-                <directory>src/</directory>
-            </whitelist>
-        </filter>
+        <blacklist>
+            <directory>vendor</directory>
+            <directory>tests</directory>
+        </blacklist>
+        <whitelist>
+            <directory>src/</directory>
+        </whitelist>
     </filter>
 </phpunit>
