@@ -25,8 +25,8 @@ abstract class LeadpagesLogin implements LeadpagesToken
     {
 
         $this->client        = $client;
-        $this->loginurl      = 'https://api.leadpages.io/auth/v1/sessions/';
-        $this->loginCheckUrl = 'https://api.leadpages.io/auth/v1/sessions/current';
+        $this->loginurl      = 'https://api.center.io/auth/v1/sessions/';
+        $this->loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
     }
 
     protected function hashUserNameAndPassword($username, $password)
