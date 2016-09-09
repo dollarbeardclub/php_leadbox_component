@@ -73,6 +73,29 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
         $this->assertEquals('this is a test response', $this->stub->response);
     }
 
+    /**
+     * User testing should have a Leadpages and Center Account
+     */
+    public function test_check_users_current_session()
+    {
+        $this->stub->token = $this->testToken;
+        $response = $this->stub->checkCurrentUserSession();
+
+        //account has leadpages account
+        $this->assertArrayHasKey('LEADPAGES_20160216', $response['profiles']);
+        //account has center account
+        $this->assertArrayHasKey('CENTER_20160216', $response['profiles']);
+    }
+
+    public function test_generate_new_token()
+    {
+        $this->stub->token = $this->testToken;
+        $response = $this->stub->refreshUserToken();
+        $newToken = $response['securityToken'];
+        $this->assertNotEmpty($newToken);
+        $this->assertNotEquals($this->testToken, $newToken);
+    }
+
 }
 
 class LeadpagesLoginTestFail extends PHPUnit_Framework_TestCase
