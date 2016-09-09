@@ -1,5 +1,5 @@
 {
-    "name": "Leadpages/Leadboxes",
+    "name": "leadpages/leadboxes",
     "description": "A package to allow you to easily integrate Leadpages Leadboxes into your PHP project",
     "license": "MIT",
     "require": {
