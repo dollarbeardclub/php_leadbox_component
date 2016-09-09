@@ -15,7 +15,7 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
         $this->username  = getenv('username');
         $this->password  = getenv('password');
-        $this->testToken = getenv('testToken');
+        $this->testToken;
 
         $this->stub = $this->getMockForAbstractClass(LeadpagesLogin::class, [new GuzzleHttp\Client()]);
 
@@ -49,8 +49,9 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
         //get a response from Leadpages
 
         $this->stub->getUser($this->username, $this->password)->parseResponse();
-
+        $this->testToken = $this->stub->token;
         //if all succeeded the token should not be empty and should be a string
+        $this->assertEquals($this->testToken, $this->stub->token);
         $this->assertNotEmpty($this->stub->token);
         $this->assertInternalType('string', $this->stub->token);
 
@@ -62,7 +63,9 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
     public function test_current_user_token_is_good()
     {
-        $this->stub->token = $this->testToken;
+        //get a user token
+        $this->stub->getUser($this->username, $this->password)->parseResponse();
+
         $isTokenGood = $this->stub->checkCurrentUserToken();
         $this->assertTrue($isTokenGood);
     }
@@ -78,7 +81,9 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
      */
     public function test_check_users_current_session()
     {
-        $this->stub->token = $this->testToken;
+        //get a user token
+        $this->stub->getUser($this->username, $this->password)->parseResponse();
+
         $response = $this->stub->checkCurrentUserSession();
 
         //account has leadpages account
@@ -89,7 +94,9 @@ class LeadpagesLoginTestSuccess extends PHPUnit_Framework_TestCase
 
     public function test_generate_new_token()
     {
-        $this->stub->token = $this->testToken;
+        //get a user token
+        $this->stub->getUser($this->username, $this->password)->parseResponse();
+
         $response = $this->stub->refreshUserToken();
         $newToken = $response['securityToken'];
         $this->assertNotEmpty($newToken);
