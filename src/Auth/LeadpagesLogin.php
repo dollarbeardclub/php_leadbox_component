@@ -11,6 +11,9 @@ abstract class LeadpagesLogin implements LeadpagesToken
 
     protected $client;
     public $response;
+    public $loginurl = 'https://api.center.io/auth/v1/sessions/';
+    public $loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
+    public $userSessionCheckUrl = 'https://api.center.io/account/v1/users/current';
 
     /**
      * Token label that should be used to reference the token in the database for consistency across platforms
@@ -23,11 +26,7 @@ abstract class LeadpagesLogin implements LeadpagesToken
 
     public function __construct(Client $client)
     {
-
-        $this->client        = $client;
-        $this->loginurl      = 'https://api.center.io/auth/v1/sessions/';
-        $this->loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
-        $this->userSessionCheckUrl = 'https://api.center.io/account/v1/users/current';
+        $this->client = $client;
     }
 
     protected function hashUserNameAndPassword($username, $password)
