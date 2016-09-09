@@ -25,8 +25,9 @@ abstract class LeadpagesLogin implements LeadpagesToken
     {
 
         $this->client        = $client;
-        $this->loginurl      = 'https://api.leadpages.io/auth/v1/sessions/';
-        $this->loginCheckUrl = 'https://api.leadpages.io/auth/v1/sessions/current';
+        $this->loginurl      = 'https://api.center.io/auth/v1/sessions/';
+        $this->loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
+        $this->userSessionCheckUrl = 'https://api.center.io/account/v1/users/current';
     }
 
     protected function hashUserNameAndPassword($username, $password)
@@ -69,6 +70,32 @@ abstract class LeadpagesLogin implements LeadpagesToken
     }
 
     /**
+     * Create a new token for user. This should be set to run via a cron
+     * ~ every 20-25 days as a users token lasts 30 days.
+     * @return $this|mixed
+     */
+    public function refreshUserToken()
+    {
+        $body = json_encode(['clientType' => 'wp-plugin']);
+        try {
+            $response       = $this->client->post(
+              $this->loginurl, //url
+              [
+                'headers' => ['LP-Security-Token' => $this->token],
+                'body'    => $body //wp-plugin value makes session not expire
+              ]);
+            return json_decode($response->getBody(), true);
+        } catch (ClientException $e) {
+            $response       = [
+              'code'     => $e->getCode(),
+              'response' => $e->getMessage(),
+              'error'    => (bool)true
+            ];
+            $this->response = json_encode($response);
+            return $this;
+        }
+    }
+    /**
      * Check to see if you get a proper response back if you use the token stored in your DB
      * @return bool
      */
@@ -85,6 +112,27 @@ abstract class LeadpagesLogin implements LeadpagesToken
             if(isset($responseArray['securityToken'])) {
                 $response = true;
             }
+        } catch (ClientException $e) {
+            //return false as token is bad
+            $response = false;
+        }
+        return $response;
+    }
+
+    /**
+     * Get current user account infomration to see if they are still a subscribe to a Leadpages Service
+     * @return response body or false
+     */
+    public function checkCurrentUserSession()
+    {
+        try {
+            $response       = $this->client->get(
+              $this->userSessionCheckUrl,
+              [
+                'headers' => ['LP-Security-Token' => $this->token]
+              ]);
+            //return true as token is good
+            $response = json_decode($response->getBody(), true);
         } catch (ClientException $e) {
             //return false as token is bad
             $response = false;
