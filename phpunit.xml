@@ -11,6 +11,9 @@
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
+    <logging>
+        <log type="coverage-html" target="./tests/codeCoverage" charset="UTF-8"/>
+    </logging>
     <filter>
         <blacklist>
             <directory>vendor</directory>
