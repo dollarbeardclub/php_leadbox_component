@@ -12,6 +12,8 @@ class TestLeadboxes extends \PHPUnit_Framework_TestCase
     public $client;
     public $leadboxTypes;
     public $leadboxId;
+    public $username;
+    public $password;
 
     public function setUp()
     {
@@ -25,16 +27,21 @@ class TestLeadboxes extends \PHPUnit_Framework_TestCase
           'exit'
         ];
         $this->leadboxId = getenv('leadboxId');
+        $this->username  = getenv('username');
+        $this->password  = getenv('password');
     }
 
 
     public function test_get_all_leadboxes()
     {
+        $this->login->getUser($this->username, $this->password)->parseResponse();
         $response = $this->leadboxes->getAllLeadboxes();
         $this->assertEquals('200', $response['code']);
     }
 
     public function test_build_single_leadbox_url(){
+
+        $this->login->getUser($this->username, $this->password)->parseResponse();
 
 
         $urlTimed = $this->leadboxes->buildSingleLeadboxUrl($this->leadboxId, $this->leadboxTypes[0]);
@@ -56,6 +63,8 @@ class TestLeadboxes extends \PHPUnit_Framework_TestCase
 
     public function  test_get_single_leadbox_embed_code()
     {
+        $this->login->getUser($this->username, $this->password)->parseResponse();
+
         $timedEmbedCode = $this->leadboxes->getSingleLeadboxEmbedCode($this->leadboxId, $this->leadboxTypes[0]);
         $exitEmbedCode = $this->leadboxes->getSingleLeadboxEmbedCode($this->leadboxId, $this->leadboxTypes[1]);
 

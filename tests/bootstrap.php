@@ -15,13 +15,12 @@ use Leadpages\Auth\LeadpagesLogin;
 
 class fakeLogin extends LeadpagesLogin
 {
-
-
     /**
      * act as our database
      * @var array
      */
     public $datastore = [];
+    public $leadpagesLogin;
     public $username;
     public $password;
     public $token;
@@ -32,7 +31,6 @@ class fakeLogin extends LeadpagesLogin
         $this->client   = $client;
         $this->username = getenv('username');
         $this->password = getenv('password');
-        $this->token    = getenv('testToken');
     }
 
 

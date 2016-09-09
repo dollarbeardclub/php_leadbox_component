@@ -52,10 +52,10 @@ class TestLeadboxesFail extends \PHPUnit_Framework_TestCase
         $timedEmbedCode = $this->leadboxes->getSingleLeadboxEmbedCode($this->leadboxId, $this->leadboxTypes[0]);
         $exitEmbedCode = $this->leadboxes->getSingleLeadboxEmbedCode($this->leadboxId, $this->leadboxTypes[1]);
 
-        $this->assertEquals('500', $timedEmbedCode['code']);
+        $this->assertEquals('401', $timedEmbedCode['code']);
         $this->assertTrue($timedEmbedCode['error']);
 
-        $this->assertEquals('500', $exitEmbedCode['code']);
+        $this->assertEquals('401', $exitEmbedCode['code']);
         $this->assertTrue($exitEmbedCode['error']);
     }
 
