@@ -11,10 +11,10 @@ abstract class LeadpagesLogin implements LeadpagesToken
 
     protected $client;
     public $response;
-    public $loginurl = 'https://api.center.io/auth/v1/sessions/';
-    public $loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
-    public $refreshUserToken = 'https://api.center.io/account/v1/sessions/';
-    public $userSessionCheckUrl = 'https://api.center.io/account/v1/users/current';
+    public $loginurl = 'https://api.leadpages.io/auth/v1/sessions/';
+    public $loginCheckUrl = 'https://api.leadpages.io/auth/v1/sessions/current';
+    public $refreshUserToken = 'https://api.leadpages.io/account/v1/sessions/';
+    public $userSessionCheckUrl = 'https://api.leadpages.io/account/v1/users/current';
 
     /**
      * Token label that should be used to reference the token in the database for consistency across platforms
