@@ -13,6 +13,7 @@ abstract class LeadpagesLogin implements LeadpagesToken
     public $response;
     public $loginurl = 'https://api.center.io/auth/v1/sessions/';
     public $loginCheckUrl = 'https://api.center.io/auth/v1/sessions/current';
+    public $refreshUserToken = 'https://api.center.io/account/v1/sessions/';
     public $userSessionCheckUrl = 'https://api.center.io/account/v1/users/current';
 
     /**
@@ -78,7 +79,7 @@ abstract class LeadpagesLogin implements LeadpagesToken
         $body = json_encode(['clientType' => 'wp-plugin']);
         try {
             $response       = $this->client->post(
-              $this->loginurl, //url
+              $this->refreshUserToken, //url
               [
                 'headers' => ['LP-Security-Token' => $this->token],
                 'body'    => $body //wp-plugin value makes session not expire
