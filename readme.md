@@ -84,14 +84,7 @@ if($response == 'success'){
     return $this->response;
 }
 
-
-//will return true of false if the users stored token retrieves a proper response
-$isLoggedIn = $leadpagesLogin->checkCurrentUserToken();
-
-
-//this will set the response for checkIfUserIsloggedIn to verify against.
-//could also chain them as they are fluent $leadpagesLogin->getCurrentUserToken()->checkIfUserIsLoggedIn()
-//isLoggedIn should be true if the current token call resulted in a proper response from auth api
+//check if a user is logged in
 $isLoggedIn = $leadpagesLogin->checkIfUserIsLoggedIn();
 
 
