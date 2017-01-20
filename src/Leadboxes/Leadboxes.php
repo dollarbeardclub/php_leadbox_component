@@ -34,8 +34,8 @@ class Leadboxes
     public function __construct(Client $client, LeadpagesLogin $login)
     {
 
-        $this->client       = $client;
-        $this->login        = $login;
+        $this->client = $client;
+        $this->login = $login;
         $this->leadboxesUrl = "https://my.leadpages.net/leadbox/v1/leadboxes";
     }
 
@@ -44,12 +44,13 @@ class Leadboxes
     {
         try {
             $response = $this->client->get($this->leadboxesUrl,
-              [
-                'headers' => ['LP-Security-Token' => $this->login->token]
-              ]);
+                [
+                    'headers' => ['LP-Security-Token' => $this->login->token],
+                    'verify' => false,
+                ]);
             $response = [
-              'code'     => '200',
-              'response' => $response->getBody()->getContents()
+                'code' => '200',
+                'response' => $response->getBody()->getContents()
             ];
         } catch (ClientException $e) {
             $response = $this->parseException($e);
@@ -65,18 +66,19 @@ class Leadboxes
     public function getSingleLeadboxEmbedCode($id, $type)
     {
         try {
-            $url      = $this->buildSingleLeadboxUrl($id, $type);
+            $url = $this->buildSingleLeadboxUrl($id, $type);
             $response = $this->client->get($url,
-              [
-                'headers' => ['LP-Security-Token' => $this->login->token]
-              ]);
+                [
+                    'headers' => ['LP-Security-Token' => $this->login->token],
+                    'verify' => false,
+                ]);
 
             $body = $response->getBody()->getContents();
             $body = json_decode($body, true);
 
             $response = [
-              'code'     => '200',
-              'response' => json_encode(['embed_code' => $body['_items']['publish_settings']['embed_code']])
+                'code' => '200',
+                'response' => json_encode(['embed_code' => $body['_items']['publish_settings']['embed_code']])
             ];
         } catch (ClientException $e) {
             $response = $this->parseException($e);
@@ -93,7 +95,7 @@ class Leadboxes
     public function buildSingleLeadboxUrl($id, $type)
     {
         $queryParams = http_build_query(['popup_type' => $type]);
-        $url         = $this->leadboxesUrl . '/' . $id . '?' . $queryParams;
+        $url = $this->leadboxesUrl . '/' . $id . '?' . $queryParams;
         return $url;
     }
 
@@ -108,9 +110,9 @@ class Leadboxes
     public function parseException($e, $message = '')
     {
         $response = [
-          'code'     => $e->getCode(),
-          'response' => $message . ' ' . $e->getMessage(),
-          'error'    => (bool)true
+            'code' => $e->getCode(),
+            'response' => $message . ' ' . $e->getMessage(),
+            'error' => (bool)true
         ];
         return $response;
     }
